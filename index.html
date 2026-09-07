@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Na Medida</title>
+  <meta name="description" content="O primeiro app brasileiro de redução de álcool feito para a vida social do país. Val, sua parceira de IA, planeja o happy hour, o churrasco e o carnaval sem exagero.">
+  <meta property="og:title" content="Na Medida — Beba menos. Curta muito mais.">
+  <meta property="og:description" content="Coach de IA que planeja o happy hour de sexta e o churrasco de domingo sem exagero. Sem julgamento, sem cobrança em dólar.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,700;1,9..144,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --teal:        #1D9E75;
+      --teal-mid:    #168A62;
+      --teal-soft:   #E3F3EC;
+      --amber:       #EF9F27;
+      --amber-soft:  #FDF3E0;
+      --ground:      #F1EFE8;
+      --surface:     #FAFAF5;
+      --surface-2:   #EFEDE5;
+      --ink:         #2C2C2A;
+      --ink-soft:    #5A5855;
+      --ink-faint:   #9B9894;
+      --border:      #DDD9CF;
+      --hero-bg:     #EAE8E0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --ground:    #0C1E15;
+        --surface:   #112318;
+        --surface-2: #182F20;
+        --ink:       #EDE9DF;
+        --ink-soft:  #ADA99F;
+        --ink-faint: #6B6762;
+        --border:    #243D2C;
+        --teal-soft: #0E2A1C;
+        --amber-soft: #251A07;
+        --hero-bg:   #0E2018;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --ground:    #0C1E15;
+      --surface:   #112318;
+      --surface-2: #182F20;
+      --ink:       #EDE9DF;
+      --ink-soft:  #ADA99F;
+      --ink-faint: #6B6762;
+      --border:    #243D2C;
+      --teal-soft: #0E2A1C;
+      --amber-soft: #251A07;
+      --hero-bg:   #0E2018;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--ground);
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── TYPE ───────────────────────────────────────────── */
+    .display {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+    .display-lg { font-size: clamp(3.5rem, 10vw, 8rem); }
+    .display-md { font-size: clamp(2rem, 5vw, 3.5rem); }
+
+    .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────────────── */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ground);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 3.75rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .logo-icon { display: block; flex-shrink: 0; }
+    .glass-outline { stroke: var(--ink); }
+
+    .logo-wordmark {
+      display: flex;
+      align-items: baseline;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+
+    .logo-na { font-weight: 300; color: var(--ink-soft); }
+    .logo-medida { font-weight: 500; color: var(--teal); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #fff;
+      padding: 0.65rem 1.4rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary:hover { background: var(--teal-mid); }
+    .btn-lg { padding: 0.9rem 2rem; font-size: 1rem; border-radius: 100px; }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    .hero {
+      background: var(--hero-bg);
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--teal-soft);
+      color: var(--teal);
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1.75rem;
+    }
+
+    .eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .hero-headline {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.75rem;
+    }
+
+    .hl-teal { color: var(--teal); }
+    .hl-amber { color: var(--amber); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-form {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .hero-input::placeholder { color: var(--ink-faint); }
+    .hero-input:focus { border-color: var(--teal); }
+
+    .trust-badges {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+    }
+
+    .trust-icon { width: 14px; height: 14px; color: var(--teal); flex-shrink: 0; }
+
+    /* ─── CHAT CARD ──────────────────────────────────────── */
+    .chat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .val-avatar {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .chat-name { font-weight: 600; font-size: 0.9rem; }
+    .chat-status { font-size: 0.75rem; color: var(--teal); display: flex; align-items: center; gap: 0.3rem; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); display: inline-block; }
+
+    .chat-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .msg {
+      max-width: 82%;
+      padding: 0.65rem 0.9rem;
+      border-radius: 14px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .msg-val {
+      background: var(--teal-soft);
+      color: var(--ink);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg-user {
+      background: var(--teal);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg-time { font-size: 0.7rem; color: var(--ink-faint); align-self: flex-end; margin-top: -0.25rem; }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 0.65rem 0.9rem;
+      background: var(--teal-soft);
+      border-radius: 14px;
+      border-bottom-left-radius: 4px;
+      width: fit-content;
+      align-self: flex-start;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: typing 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-3px); }
+    }
+
+    /* ─── STATS BAND ─────────────────────────────────────── */
+    .stats-band {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      .stats-inner { grid-template-columns: 1fr; }
+    }
+
+    .stat-item {
+      padding: 1rem 2rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    @media (max-width: 600px) {
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+    }
+
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 2.25rem;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-desc { font-size: 0.85rem; color: var(--ink-soft); }
+
+    /* ─── SECTIONS ───────────────────────────────────────── */
+    section { padding: 5rem 0; }
+
+    .section-label { margin-bottom: 0.75rem; }
+
+    .section-headline {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+
+    /* ─── HOW IT WORKS ───────────────────────────────────── */
+    .how-section { background: var(--surface); }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 800px) {
+      .how-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 2rem; margin-top: 2.5rem; }
+    .step { display: flex; gap: 1.25rem; align-items: flex-start; }
+
+    .step-num {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .step-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-content p { font-size: 0.9rem; color: var(--ink-soft); }
+
+    /* ─── FEATURES ───────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      margin-top: 3rem;
+      background: var(--border);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature-cell {
+      background: var(--surface);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .feature-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--teal-soft);
+      color: var(--teal);
+    }
+
+    .feature-icon.amber { background: var(--amber-soft); color: var(--amber); }
+    .feature-cell h4 { font-size: 1rem; font-weight: 600; }
+    .feature-cell p { font-size: 0.875rem; color: var(--ink-soft); line-height: 1.6; }
+
+    /* ─── PERSONAS ───────────────────────────────────────── */
+    .personas-section { background: var(--surface-2); }
+
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 800px) {
+      .personas-grid { grid-template-columns: 1fr; }
+    }
+
+    .persona-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .persona-quote { font-size: 0.95rem; line-height: 1.65; color: var(--ink); font-style: italic; }
+    .persona-quote::before { content: "\201C"; color: var(--teal); font-size: 1.25em; font-style: normal; }
+    .persona-quote::after { content: "\201D"; color: var(--teal); font-size: 1.25em; font-style: normal; }
+
+    .persona-author { display: flex; align-items: center; gap: 0.75rem; margin-top: auto; }
+
+    .persona-avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .persona-info { font-size: 0.8rem; }
+    .persona-name { font-weight: 600; }
+    .persona-detail { color: var(--ink-faint); }
+
+    /* ─── PRICING ────────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 800px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
+    .plan {
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .plan.featured { border-color: var(--teal); }
+
+    .plan-badge {
+      position: absolute;
+      top: -0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--teal);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.85rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .plan-name { font-weight: 600; font-size: 0.9rem; color: var(--ink-soft); }
+
+    .plan-price { display: flex; align-items: baseline; gap: 0.25rem; }
+
+    .plan-price-main {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: var(--ink);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .plan-price-period { font-size: 0.85rem; color: var(--ink-faint); }
+    .plan-desc { font-size: 0.875rem; color: var(--ink-soft); }
+    .plan-features { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .plan-feature { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.875rem; }
+    .check-icon { color: var(--teal); flex-shrink: 0; margin-top: 0.1rem; }
+
+    .plan-cta { margin-top: auto; }
+
+    .btn-outline {
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      padding: 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    .btn-full {
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-full:hover { background: var(--teal-mid); }
+
+    /* ─── FINAL CTA ──────────────────────────────────────── */
+    .final-cta {
+      background: var(--teal);
+      color: #fff;
+      text-align: center;
+      padding: 5rem 0;
+    }
+
+    .final-cta .display { color: #fff; margin-bottom: 1.25rem; }
+    .final-cta .section-sub { color: rgba(255,255,255,0.75); margin: 0 auto 2.5rem; }
+
+    .cta-form {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .cta-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1.25rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 100px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .cta-input::placeholder { color: rgba(255,255,255,0.55); }
+    .cta-input:focus { border-color: #fff; background: rgba(255,255,255,0.2); }
+
+    .btn-white {
+      padding: 0.85rem 1.75rem;
+      background: #fff;
+      color: var(--teal);
+      border: none;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      flex-shrink: 0;
+    }
+
+    .btn-white:hover { background: #f0f0f0; }
+    .btn-white:active { transform: scale(0.98); }
+
+    .success-msg {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+    }
+
+    .success-icon-wrap {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy { font-size: 0.8rem; color: var(--ink-faint); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; }
+    .footer-links a:hover { color: var(--teal); }
+
+    /* ─── MISC ───────────────────────────────────────────── */
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* Chat animation */
+    .chat-body .msg, .chat-body .msg-time {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: msgIn 0.35s ease forwards;
+    }
+
+    @keyframes msgIn { to { opacity: 1; transform: translateY(0); } }
+
+    .chat-body > *:nth-child(1) { animation-delay: 0.3s; }
+    .chat-body > *:nth-child(2) { animation-delay: 0.5s; }
+    .chat-body > *:nth-child(3) { animation-delay: 0.7s; }
+    .chat-body > *:nth-child(4) { animation-delay: 0.9s; }
+    .chat-body > *:nth-child(5) { animation-delay: 1.1s; }
+    .chat-body > *:nth-child(6) { animation-delay: 1.4s; }
+
+    .hero-left {
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-icon" width="18" height="28" viewBox="0 0 48 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="glass-clip">
+            <path d="M3,4 L45,4 L35,57 Q35,62 30,62 L18,62 Q13,62 13,57 Z"/>
+          </clipPath>
+        </defs>
+        <rect x="0" y="27" width="48" height="36" fill="#1D9E75" clip-path="url(#glass-clip)"/>
+        <path d="M3,4 L45,4 L35,57 Q35,62 30,62 L18,62 Q13,62 13,57 Z" class="glass-outline" fill="none" stroke-width="2.8" stroke-linejoin="round"/>
+        <line x1="7" y1="27" x2="41" y2="27" stroke="#EF9F27" stroke-width="2.8"/>
+        <line x1="1" y1="22" x2="1" y2="32" stroke="#EF9F27" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-wordmark"><span class="logo-na">na</span>&nbsp;<span class="logo-medida">medida</span></span>
+    </a>
+    <a href="#lista" class="btn btn-primary">Entrar na lista</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          O primeiro app brasileiro de redução de álcool
+        </div>
+        <h1 class="hero-headline">
+          Beba <span class="hl-teal">menos.</span><br>
+          Curta <span class="hl-amber">muito mais.</span>
+        </h1>
+        <p class="hero-sub">
+          Val, sua parceira de IA, planeja o happy hour de sexta, o churrasco de domingo e o carnaval sem exagero — sem julgamento, sem cobrança em dólar.
+        </p>
+        <form class="hero-form" id="hero-form" onsubmit="handleSubmit(event, 'hero')">
+          <input class="hero-input" type="email" placeholder="seu@email.com" required id="hero-email">
+          <button type="submit" class="btn btn-primary btn-lg">Quero entrar na lista →</button>
+        </form>
+        <div class="trust-badges">
+          <span class="trust-item">
+            <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
+            Pix aceito
+          </span>
+          <span class="trust-item">
+            <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
+            Cancela em 1 clique
+          </span>
+          <span class="trust-item">
+            <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
+            Gratuito pra começar
+          </span>
+        </div>
+      </div>
+
+      <!-- VAL CHAT CARD -->
+      <div class="chat-card">
+        <div class="chat-header">
+          <div class="val-avatar">V</div>
+          <div>
+            <div class="chat-name">Val</div>
+            <div class="chat-status"><span class="status-dot"></span> Sua parceira de planos</div>
+          </div>
+        </div>
+        <div class="chat-body">
+          <div class="msg msg-user">Churrasco amanhã no Carlos. Vai ter cerveja pra caramba 😬</div>
+          <div class="msg msg-val">Boa! Me conta — você tá pensando em ir até onde amanhã? Qual é o plano?</div>
+          <div class="msg msg-user">Quero ficar em 3 cervejas. Mas sempre escapo…</div>
+          <div class="msg msg-val">Vamos montar um Cartão de Intenção. 3 cervejas, uma a cada hora e meia — assim o rolê dura mais e você chega bem no domingo. Quer que eu te mande um lembrete na hora do almoço?</div>
+          <div class="msg-time">Plano salvo ✓</div>
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="wrap">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">24M</div>
+        <div class="stat-desc">brasileiros bebem mais do que gostariam<br><span style="font-size:0.75rem;color:var(--ink-faint)">Vigitel 2025</span></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">R$0</div>
+        <div class="stat-desc">para começar — sem cobrança em dólar, sem letra miúda</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1 clique</div>
+        <div class="stat-desc">para cancelar, sempre, no menu principal do app</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-section">
+  <div class="wrap">
+    <div class="how-grid">
+      <div>
+        <p class="label section-label">Como funciona</p>
+        <h2 class="section-headline">Planejou antes.<br>Curtiu direito.<br>Val te ajuda nos dois.</h2>
+        <p class="section-sub">Não é um contador de bebidas frio. É uma parceira que conhece o seu calendário — churrasco, réveillon, happy hour — e planeja junto.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Conta o rolê pra Val</h4>
+              <p>Antes do evento, Val faz 3–4 perguntas e monta um Cartão de Intenção realista, não um plano de abstinência.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Registra o que aconteceu</h4>
+              <p>Latão, caipirinha, vinho, gin — banco de drinques brasileiro. Sem julgamento: foi diferente do plano? Recalcula. Amanhã é outro dia.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Vê o impacto crescer</h4>
+              <p>R$ economizados. Calorias. Dias no plano. Padrões que emergem com o tempo — sem precisar de especialista para interpretar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini dashboard -->
+      <div style="background:var(--ground);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem;display:flex;flex-direction:column;gap:1.25rem;">
+        <p class="label">Seu dashboard — essa semana</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.875rem;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;">
+            <div style="font-size:0.75rem;color:var(--ink-faint);margin-bottom:0.25rem;">Economizados</div>
+            <div style="font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:1.75rem;color:var(--teal);font-variant-numeric:tabular-nums;">R$127</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;">
+            <div style="font-size:0.75rem;color:var(--ink-faint);margin-bottom:0.25rem;">Dias no plano</div>
+            <div style="font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:1.75rem;color:var(--amber);font-variant-numeric:tabular-nums;">18</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;">
+            <div style="font-size:0.75rem;color:var(--ink-faint);margin-bottom:0.25rem;">Drinks a menos/sem</div>
+            <div style="font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:1.75rem;color:var(--ink);font-variant-numeric:tabular-nums;">−4</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;">
+            <div style="font-size:0.75rem;color:var(--ink-faint);margin-bottom:0.25rem;">Calorias evitadas</div>
+            <div style="font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:1.75rem;color:var(--ink);font-variant-numeric:tabular-nums;">−580</div>
+          </div>
+        </div>
+        <div style="background:var(--teal-soft);border-radius:12px;padding:0.875rem 1rem;display:flex;gap:0.75rem;align-items:flex-start;">
+          <div style="width:1.75rem;height:1.75rem;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Fraunces',serif;font-style:italic;font-weight:700;color:#fff;font-size:0.8rem;">V</div>
+          <p style="font-size:0.8rem;color:var(--ink);line-height:1.5;">Sexta chegando. Você tem algum rolê programado? Me conta que a gente monta um plano juntos. 🤙</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section>
+  <div class="wrap">
+    <p class="label section-label">O que você vai usar toda semana</p>
+    <h2 class="section-headline">Feito pra vida social brasileira,<br>não pra abstinência.</h2>
+    <div class="features-grid">
+      <div class="feature-cell">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        </div>
+        <h4>Planejador de Ocasião</h4>
+        <p>Antes do churrasco, do happy hour ou do carnaval, Val monta um plano realista em 3 perguntas. Cartão de Intenção salvo, lembrete no dia.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon amber">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </div>
+        <h4>Drink Logger Brasileiro</h4>
+        <p>Latão, caipirinha, chopp, cachaça, vinho, gin. Tudo aqui, com dose, horário e contexto. Não é planilha — é o registro que faz sentido.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        <h4>Dashboard de Impacto</h4>
+        <p>R$ economizados, calorias evitadas, dias no plano. Números reais, apresentados como conquistas — não como relatório médico.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon amber">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h4>Sem Julgamento, Zero Drama</h4>
+        <p>Escorregou no plano? Val não lecture. "Recalcula. Amanhã é outro dia." O streak reseta sem cerimônia — você decide quando recomeçar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section class="personas-section">
+  <div class="wrap">
+    <p class="label section-label">Quem usa o Na Medida</p>
+    <h2 class="section-headline">Pessoas que curtem a vida<br>e querem curtir ainda mais.</h2>
+    <div class="personas-grid">
+      <div class="persona-card">
+        <p class="persona-quote">Quero planejar o happy hour de sexta com Val e chegar na reunião de segunda sem aquela sensação de ter exagerado.</p>
+        <div class="persona-author">
+          <div class="persona-avatar" style="background:var(--teal);">M</div>
+          <div class="persona-info">
+            <div class="persona-name">Mariana, 32</div>
+            <div class="persona-detail">Gerente · São Paulo</div>
+          </div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <p class="persona-quote">Quero ver quanto dinheiro e calorias vou economizar reduzindo de 4 pra 2 cervejas no churrasco. Em real — não em dólar.</p>
+        <div class="persona-author">
+          <div class="persona-avatar" style="background:var(--amber);">C</div>
+          <div class="persona-info">
+            <div class="persona-name">Carlos, 41</div>
+            <div class="persona-detail">Pai · Belo Horizonte</div>
+          </div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <p class="persona-quote">Quero um app que leve em conta carnaval, réveillon e shows — não um que me sugira Dry January em fevereiro.</p>
+        <div class="persona-author">
+          <div class="persona-avatar" style="background:#8B5CF6;">J</div>
+          <div class="persona-info">
+            <div class="persona-name">Júlia, 27</div>
+            <div class="persona-detail">Carioca · Rio de Janeiro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="wrap">
+    <p class="label section-label">Planos e preços</p>
+    <h2 class="section-headline">Transparente como você merece.<br>Em real.</h2>
+    <p class="section-sub">Sem cobrança em dólar. Sem renovação escondida. Cancela em 1 clique no menu principal — sempre.</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div>
+          <p class="plan-name">Grátis</p>
+          <div class="plan-price"><span class="plan-price-main">R$0</span></div>
+          <p class="plan-desc" style="margin-top:0.5rem;">Pra conhecer e começar hoje.</p>
+        </div>
+        <div class="plan-features">
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Drink logger completo</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Dashboard básico</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Streaks e conquistas</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Plano de 7 dias</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> 3 conversas com Val/mês</div>
+        </div>
+        <div class="plan-cta"><a href="#lista" class="btn-outline">Começar grátis</a></div>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">Mais popular</div>
+        <div>
+          <p class="plan-name">Pro Mensal</p>
+          <div class="plan-price">
+            <span class="plan-price-main">R$29,90</span>
+            <span class="plan-price-period">/mês</span>
+          </div>
+          <p class="plan-desc" style="margin-top:0.5rem;">Val ilimitada + tudo o que você precisa.</p>
+        </div>
+        <div class="plan-features">
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> <strong>Val ilimitada</strong></div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Planejador de Ocasião completo</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Calendário brasileiro (Carnaval, Copa…)</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Diário de gatilhos + insights</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Histórico completo + exportação</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Relatório semanal automático</div>
+        </div>
+        <div class="plan-cta"><a href="#lista" class="btn-full">Entrar na lista</a></div>
+      </div>
+
+      <div class="plan">
+        <div>
+          <p class="plan-name">Pro Anual</p>
+          <div class="plan-price">
+            <span class="plan-price-main">R$239</span>
+            <span class="plan-price-period">/ano</span>
+          </div>
+          <p class="plan-desc" style="margin-top:0.5rem;">~R$20/mês. Dois meses de graça.</p>
+        </div>
+        <div class="plan-features">
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Tudo do Pro Mensal</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Badge exclusiva de fundador</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Pix aceito</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Cancelamento em 1 clique</div>
+          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Acesso antecipado às novidades</div>
+        </div>
+        <div class="plan-cta"><a href="#lista" class="btn-outline">Entrar na lista</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="lista">
+  <div class="wrap">
+    <h2 class="display display-md">O churrasco tá ótimo.<br>Você também.</h2>
+    <p class="section-sub">Entre na lista de lançamento e seja o primeiro a saber quando o Na Medida abre as portas. Grátis pra sempre começar.</p>
+    <form id="cta-form" onsubmit="handleSubmit(event, 'cta')">
+      <div class="cta-form" id="cta-form-fields">
+        <input class="cta-input" type="email" placeholder="seu@email.com" required id="cta-email">
+        <button type="submit" class="btn-white">Quero entrar 🤙</button>
+      </div>
+      <div class="success-msg" id="cta-success">
+        <div class="success-icon-wrap">✓</div>
+        <span>Boa! Te avisamos quando abrir. Até logo no rolê. 🥂</span>
+      </div>
+    </form>
+    <p style="margin-top:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.5);">
+      Sem spam. Sem carta de amor de vendedor. Só o aviso quando estiver pronto.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap footer-inner">
+    <span class="footer-copy">© 2026 Na Medida · Bem-estar · Brasil</span>
+    <nav class="footer-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="#">Contato</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  const emails = [];
+
+  function handleSubmit(e, source) {
+    e.preventDefault();
+    const emailInput = document.getElementById(source === 'hero' ? 'hero-email' : 'cta-email');
+    const email = emailInput.value.trim();
+    if (!email) return;
+    if (!emails.includes(email)) emails.push(email);
+
+    if (source === 'hero') {
+      document.getElementById('hero-form').innerHTML = `
+        <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;background:var(--teal-soft);border-radius:100px;color:var(--teal);font-weight:600;font-size:0.95rem;">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg>
+          Boa! Te avisamos quando abrir. 🤙
+        </div>`;
+    } else {
+      document.getElementById('cta-form-fields').style.display = 'none';
+      document.getElementById('cta-success').style.display = 'flex';
+    }
+  }
+
+  // Chat typing animation
+  setTimeout(() => {
+    const typing = document.querySelector('.typing-indicator');
+    if (typing) {
+      setTimeout(() => {
+        typing.innerHTML = '<div class="msg msg-val" style="animation:none;opacity:1;transform:none;">Mandado! Te vejo no balanço do domingo. 🤙</div>';
+      }, 3000);
+    }
+  }, 2000);
+</script>
+
+</body>
+</html>

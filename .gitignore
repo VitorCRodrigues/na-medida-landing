@@ -2,3 +2,5 @@
 Thumbs.db
 *.log
 .env
+.playwright-cli/
+.playwright-mcp/

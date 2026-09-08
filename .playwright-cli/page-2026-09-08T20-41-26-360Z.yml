@@ -1,0 +1,191 @@
+- generic [active] [ref=f2e1]:
+  - navigation [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - link "na medida" [ref=f2e4] [cursor=pointer]:
+        - /url: "#"
+        - generic [ref=f2e8]:
+          - generic [ref=f2e9]: na
+          - generic [ref=f2e10]: medida
+      - link "Entrar na lista" [ref=f2e11] [cursor=pointer]:
+        - /url: "#lista"
+  - generic [ref=f2e14]:
+    - generic [ref=f2e15]:
+      - generic [ref=f2e16]: O primeiro app brasileiro de redução de álcool
+      - heading "Beba menos. Curta muito mais." [level=1] [ref=f2e18]
+      - paragraph [ref=f2e19]: Val, sua parceira de IA, planeja o happy hour de sexta, o churrasco de domingo e o carnaval sem exagero — sem julgamento, sem cobrança em dólar.
+      - generic [ref=f2e20]:
+        - textbox "seu@email.com" [ref=f2e21]
+        - button "Quero entrar na lista →" [ref=f2e22] [cursor=pointer]
+      - generic [ref=f2e23]:
+        - generic [ref=f2e24]: Pix aceito
+        - generic [ref=f2e27]: Cancela em 1 clique
+        - generic [ref=f2e30]: Gratuito pra começar
+    - generic [ref=f2e33]:
+      - generic [ref=f2e34]:
+        - generic [ref=f2e35]: V
+        - generic [ref=f2e36]:
+          - generic [ref=f2e37]: Val
+          - generic [ref=f2e38]: Sua parceira de planos
+      - generic [ref=f2e40]:
+        - generic [ref=f2e41]: Churrasco amanhã no Carlos. Vai ter cerveja pra caramba 😬
+        - generic [ref=f2e42]: Boa! Me conta — você tá pensando em ir até onde amanhã? Qual é o plano?
+        - generic [ref=f2e43]: Quero ficar em 3 cervejas. Mas sempre escapo…
+        - generic [ref=f2e44]: Vamos montar um Cartão de Intenção. 3 cervejas, uma a cada hora e meia — assim o rolê dura mais e você chega bem no domingo. Quer que eu te mande um lembrete na hora do almoço?
+        - generic [ref=f2e45]: Plano salvo ✓
+  - generic [ref=f2e52]:
+    - generic [ref=f2e53]:
+      - generic [ref=f2e54]: 24M
+      - generic [ref=f2e55]: brasileiros bebem mais do que gostariamVigitel 2025
+    - generic [ref=f2e56]:
+      - generic [ref=f2e57]: R$0
+      - generic [ref=f2e58]: para começar — sem cobrança em dólar, sem letra miúda
+    - generic [ref=f2e59]:
+      - generic [ref=f2e60]: 1 clique
+      - generic [ref=f2e61]: para cancelar, sempre, no menu principal do app
+  - generic [ref=f2e64]:
+    - generic [ref=f2e65]:
+      - paragraph [ref=f2e66]: Como funciona
+      - heading "Planejou antes. Curtiu direito. Val te ajuda nos dois." [level=2] [ref=f2e67]: Planejou antes.Curtiu direito.Val te ajuda nos dois.
+      - paragraph [ref=f2e68]: Não é um contador de bebidas frio. É uma parceira que conhece o seu calendário — churrasco, réveillon, happy hour — e planeja junto.
+      - generic [ref=f2e69]:
+        - generic [ref=f2e70]:
+          - generic [ref=f2e71]: "1"
+          - generic [ref=f2e72]:
+            - heading "Conta o rolê pra Val" [level=4] [ref=f2e73]
+            - paragraph [ref=f2e74]: Antes do evento, Val faz 3–4 perguntas e monta um Cartão de Intenção realista, não um plano de abstinência.
+        - generic [ref=f2e75]:
+          - generic [ref=f2e76]: "2"
+          - generic [ref=f2e77]:
+            - heading "Registra o que aconteceu" [level=4] [ref=f2e78]
+            - paragraph [ref=f2e79]: "Latão, caipirinha, vinho, gin — banco de drinques brasileiro. Sem julgamento: foi diferente do plano? Recalcula. Amanhã é outro dia."
+        - generic [ref=f2e80]:
+          - generic [ref=f2e81]: "3"
+          - generic [ref=f2e82]:
+            - heading "Vê o impacto crescer" [level=4] [ref=f2e83]
+            - paragraph [ref=f2e84]: R$ economizados. Calorias. Dias no plano. Padrões que emergem com o tempo — sem precisar de especialista para interpretar.
+    - generic [ref=f2e85]:
+      - paragraph [ref=f2e86]: Seu dashboard — essa semana
+      - generic [ref=f2e87]:
+        - generic [ref=f2e88]:
+          - generic [ref=f2e89]: Economizados
+          - generic [ref=f2e90]: R$127
+        - generic [ref=f2e91]:
+          - generic [ref=f2e92]: Dias no plano
+          - generic [ref=f2e93]: "18"
+        - generic [ref=f2e94]:
+          - generic [ref=f2e95]: Drinks a menos/sem
+          - generic [ref=f2e96]: −4
+        - generic [ref=f2e97]:
+          - generic [ref=f2e98]: Calorias evitadas
+          - generic [ref=f2e99]: −580
+      - generic [ref=f2e100]:
+        - generic [ref=f2e101]: V
+        - paragraph [ref=f2e102]: Sexta chegando. Você tem algum rolê programado? Me conta que a gente monta um plano juntos. 🤙
+  - generic [ref=f2e104]:
+    - paragraph [ref=f2e105]: O que você vai usar toda semana
+    - heading "Feito pra vida social brasileira, não pra abstinência." [level=2] [ref=f2e106]: Feito pra vida social brasileira,não pra abstinência.
+    - generic [ref=f2e107]:
+      - generic [ref=f2e108]:
+        - heading "Planejador de Ocasião" [level=4] [ref=f2e112]
+        - paragraph [ref=f2e113]: Antes do churrasco, do happy hour ou do carnaval, Val monta um plano realista em 3 perguntas. Cartão de Intenção salvo, lembrete no dia.
+      - generic [ref=f2e114]:
+        - heading "Drink Logger Brasileiro" [level=4] [ref=f2e117]
+        - paragraph [ref=f2e118]: Latão, caipirinha, chopp, cachaça, vinho, gin. Tudo aqui, com dose, horário e contexto. Não é planilha — é o registro que faz sentido.
+      - generic [ref=f2e119]:
+        - heading "Dashboard de Impacto" [level=4] [ref=f2e123]
+        - paragraph [ref=f2e124]: R$ economizados, calorias evitadas, dias no plano. Números reais, apresentados como conquistas — não como relatório médico.
+      - generic [ref=f2e125]:
+        - heading "Sem Julgamento, Zero Drama" [level=4] [ref=f2e129]
+        - paragraph [ref=f2e130]: Escorregou no plano? Val não lecture. "Recalcula. Amanhã é outro dia." O streak reseta sem cerimônia — você decide quando recomeçar.
+  - generic [ref=f2e132]:
+    - paragraph [ref=f2e133]: Quem usa o Na Medida
+    - heading "Pessoas que curtem a vida e querem curtir ainda mais." [level=2] [ref=f2e134]: Pessoas que curtem a vidae querem curtir ainda mais.
+    - generic [ref=f2e135]:
+      - generic [ref=f2e136]:
+        - paragraph [ref=f2e137]: “Quero planejar o happy hour de sexta com Val e chegar na reunião de segunda sem aquela sensação de ter exagerado.”
+        - generic [ref=f2e138]:
+          - generic [ref=f2e139]: M
+          - generic [ref=f2e140]:
+            - generic [ref=f2e141]: Mariana, 32
+            - generic [ref=f2e142]: Gerente · São Paulo
+      - generic [ref=f2e143]:
+        - paragraph [ref=f2e144]: “Quero ver quanto dinheiro e calorias vou economizar reduzindo de 4 pra 2 cervejas no churrasco. Em real — não em dólar.”
+        - generic [ref=f2e145]:
+          - generic [ref=f2e146]: C
+          - generic [ref=f2e147]:
+            - generic [ref=f2e148]: Carlos, 41
+            - generic [ref=f2e149]: Pai · Belo Horizonte
+      - generic [ref=f2e150]:
+        - paragraph [ref=f2e151]: “Quero um app que leve em conta carnaval, réveillon e shows — não um que me sugira Dry January em fevereiro.”
+        - generic [ref=f2e152]:
+          - generic [ref=f2e153]: J
+          - generic [ref=f2e154]:
+            - generic [ref=f2e155]: Júlia, 27
+            - generic [ref=f2e156]: Carioca · Rio de Janeiro
+  - generic [ref=f2e158]:
+    - paragraph [ref=f2e159]: Planos e preços
+    - heading "Transparente como você merece. Em real." [level=2] [ref=f2e160]: Transparente como você merece.Em real.
+    - paragraph [ref=f2e161]: Sem cobrança em dólar. Sem renovação escondida. Cancela em 1 clique no menu principal — sempre.
+    - generic [ref=f2e162]:
+      - generic [ref=f2e163]:
+        - generic [ref=f2e164]:
+          - paragraph [ref=f2e165]: Grátis
+          - generic [ref=f2e166]: R$0
+          - paragraph [ref=f2e168]: Pra conhecer e começar hoje.
+        - generic [ref=f2e169]:
+          - generic [ref=f2e170]: Drink logger completo
+          - generic [ref=f2e173]: Dashboard básico
+          - generic [ref=f2e176]: Streaks e conquistas
+          - generic [ref=f2e179]: Plano de 7 dias
+          - generic [ref=f2e182]: 3 conversas com Val/mês
+        - link "Começar grátis" [ref=f2e186] [cursor=pointer]:
+          - /url: "#lista"
+      - generic [ref=f2e187]:
+        - generic [ref=f2e188]: Mais popular
+        - generic [ref=f2e189]:
+          - paragraph [ref=f2e190]: Pro Mensal
+          - generic [ref=f2e191]:
+            - generic [ref=f2e192]: R$29,90
+            - generic [ref=f2e193]: /mês
+          - paragraph [ref=f2e194]: Val ilimitada + tudo o que você precisa.
+        - generic [ref=f2e195]:
+          - strong [ref=f2e199]: Val ilimitada
+          - generic [ref=f2e200]: Planejador de Ocasião completo
+          - generic [ref=f2e203]: Calendário brasileiro (Carnaval, Copa…)
+          - generic [ref=f2e206]: Diário de gatilhos + insights
+          - generic [ref=f2e209]: Histórico completo + exportação
+          - generic [ref=f2e212]: Relatório semanal automático
+        - link "Entrar na lista" [ref=f2e216] [cursor=pointer]:
+          - /url: "#lista"
+      - generic [ref=f2e217]:
+        - generic [ref=f2e218]:
+          - paragraph [ref=f2e219]: Pro Anual
+          - generic [ref=f2e220]:
+            - generic [ref=f2e221]: R$239
+            - generic [ref=f2e222]: /ano
+          - paragraph [ref=f2e223]: ~R$20/mês. Dois meses de graça.
+        - generic [ref=f2e224]:
+          - generic [ref=f2e225]: Tudo do Pro Mensal
+          - generic [ref=f2e228]: Badge exclusiva de fundador
+          - generic [ref=f2e231]: Pix aceito
+          - generic [ref=f2e234]: Cancelamento em 1 clique
+          - generic [ref=f2e237]: Acesso antecipado às novidades
+        - link "Entrar na lista" [ref=f2e241] [cursor=pointer]:
+          - /url: "#lista"
+  - generic [ref=f2e243]:
+    - heading "O churrasco tá ótimo. Você também." [level=2] [ref=f2e244]: O churrasco tá ótimo.Você também.
+    - paragraph [ref=f2e245]: Entre na lista de lançamento e seja o primeiro a saber quando o Na Medida abre as portas. Grátis pra sempre começar.
+    - generic [ref=f2e247]:
+      - textbox "seu@email.com" [ref=f2e248]
+      - button "Quero entrar 🤙" [ref=f2e249] [cursor=pointer]
+    - paragraph [ref=f2e250]: Sem spam. Sem carta de amor de vendedor. Só o aviso quando estiver pronto.
+  - contentinfo [ref=f2e251]:
+    - generic [ref=f2e252]:
+      - generic [ref=f2e253]: © 2026 Na Medida · Bem-estar · Brasil
+      - navigation [ref=f2e254]:
+        - link "Privacidade" [ref=f2e255] [cursor=pointer]:
+          - /url: "#"
+        - link "Termos" [ref=f2e256] [cursor=pointer]:
+          - /url: "#"
+        - link "Contato" [ref=f2e257] [cursor=pointer]:
+          - /url: "#"

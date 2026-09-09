@@ -27,6 +27,7 @@
       --ink-faint:   #6E6B65;
       --border:      #DDD9CF;
       --hero-bg:     #EAE8E0;
+      --error:       #B23B2E;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -41,6 +42,7 @@
         --teal-soft: #0E2A1C;
         --amber-soft: #251A07;
         --hero-bg:   #0E2018;
+        --error:     #F0908A;
       }
     }
 
@@ -55,6 +57,7 @@
       --teal-soft: #0E2A1C;
       --amber-soft: #251A07;
       --hero-bg:   #0E2018;
+      --error:     #F0908A;
     }
 
     /* ─── RESET ──────────────────────────────────────────── */
@@ -729,6 +732,27 @@
     .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; }
     .footer-links a:hover { color: var(--teal); }
 
+    /* ─── FORM STATES ────────────────────────────────────── */
+    button[disabled] { opacity: 0.65; cursor: progress; }
+
+    .form-error {
+      margin-top: 0.75rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--error);
+    }
+
+    .cta-error { color: #fff; }
+
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
     /* ─── MISC ───────────────────────────────────────────── */
     :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
@@ -794,9 +818,11 @@
           Val, sua parceira de IA, planeja o happy hour de sexta, o churrasco de domingo e o carnaval sem exagero — sem julgamento, sem cobrança em dólar.
         </p>
         <form class="hero-form" id="hero-form" onsubmit="handleSubmit(event, 'hero')">
-          <input class="hero-input" type="email" placeholder="seu@email.com" required id="hero-email">
+          <input class="hero-input" type="email" placeholder="seu@email.com" required id="hero-email" autocomplete="email">
+          <input class="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" id="hero-hp">
           <button type="submit" class="btn btn-primary btn-lg">Quero entrar na lista</button>
         </form>
+        <p class="form-error" id="hero-error" role="alert" hidden></p>
         <div class="trust-badges">
           <span class="trust-item">
             <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
@@ -1071,13 +1097,15 @@
     <p class="section-sub">Entre na lista de lançamento e seja o primeiro a saber quando o Na Medida abre as portas. Grátis pra sempre começar.</p>
     <form id="cta-form" onsubmit="handleSubmit(event, 'cta')">
       <div class="cta-form" id="cta-form-fields">
-        <input class="cta-input" type="email" placeholder="seu@email.com" required id="cta-email">
+        <input class="cta-input" type="email" placeholder="seu@email.com" required id="cta-email" autocomplete="email">
+        <input class="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" id="cta-hp">
         <button type="submit" class="btn-white">Quero entrar 🤙</button>
       </div>
       <div class="success-msg" id="cta-success">
         <div class="success-icon-wrap">✓</div>
         <span>Boa! Te avisamos quando abrir. Até logo no rolê. 🥂</span>
       </div>
+      <p class="form-error cta-error" id="cta-error" role="alert" hidden></p>
     </form>
     <p style="margin-top:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.5);">
       Sem spam. Sem carta de amor de vendedor. Só o aviso quando estiver pronto.
@@ -1098,24 +1126,51 @@
 </footer>
 
 <script>
-  const emails = [];
+  async function subscribe(email, hp) {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, hp }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Não deu pra cadastrar agora. Tenta de novo daqui a pouco.');
+    }
+  }
 
-  function handleSubmit(e, source) {
+  async function handleSubmit(e, source) {
     e.preventDefault();
-    const emailInput = document.getElementById(source === 'hero' ? 'hero-email' : 'cta-email');
+    const isHero = source === 'hero';
+    const emailInput = document.getElementById(isHero ? 'hero-email' : 'cta-email');
+    const hpInput = document.getElementById(isHero ? 'hero-hp' : 'cta-hp');
+    const errorEl = document.getElementById(isHero ? 'hero-error' : 'cta-error');
+    const btn = e.target.querySelector('button');
     const email = emailInput.value.trim();
     if (!email) return;
-    if (!emails.includes(email)) emails.push(email);
 
-    if (source === 'hero') {
-      document.getElementById('hero-form').innerHTML = `
-        <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;background:var(--teal-soft);border-radius:100px;color:var(--teal);font-weight:600;font-size:0.95rem;">
-          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg>
-          Boa! Te avisamos quando abrir. 🤙
-        </div>`;
-    } else {
-      document.getElementById('cta-form-fields').style.display = 'none';
-      document.getElementById('cta-success').style.display = 'flex';
+    errorEl.hidden = true;
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    try {
+      await subscribe(email, hpInput.value);
+
+      if (isHero) {
+        document.getElementById('hero-form').innerHTML = `
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;background:var(--teal-soft);border-radius:100px;color:var(--teal);font-weight:600;font-size:0.95rem;">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg>
+            Boa! Te avisamos quando abrir. 🤙
+          </div>`;
+      } else {
+        document.getElementById('cta-form-fields').style.display = 'none';
+        document.getElementById('cta-success').style.display = 'flex';
+      }
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.hidden = false;
+      btn.disabled = false;
+      btn.textContent = originalLabel;
     }
   }
 

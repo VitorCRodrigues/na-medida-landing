@@ -14,20 +14,46 @@ Site estático em HTML/CSS/JS puro. Sem dependências, sem build step, sem node_
 
 ```
 na-medida-landing/
-└── index.html      # tudo em um arquivo
+├── index.html          # a landing inteira (HTML + CSS + JS)
+├── api/
+│   └── subscribe.js    # função serverless: cadastra e-mail no Beehiiv
+└── .env.example        # env vars necessárias (configurar no Vercel)
 ```
 
 ## Rodando localmente
 
-Abra `index.html` direto no browser — ou use qualquer servidor estático:
+Só o visual (o formulário vai dar erro sem a função):
 
 ```bash
-# Python
 python -m http.server 3000
-
-# Node (npx)
-npx serve .
 ```
+
+Com o formulário funcionando (roda a função `api/`):
+
+```bash
+npm i -g vercel
+vercel dev            # cria .env local na primeira vez, ou copie de .env.example
+```
+
+## Formulário de e-mail (Beehiiv)
+
+Os dois formulários (hero + CTA final) enviam pra `/api/subscribe`, que chama a
+API do Beehiiv. A API key fica só no servidor, nunca no client.
+
+**Env vars** (Vercel → Project → Settings → Environment Variables):
+
+| Var | Onde achar |
+|-----|-----------|
+| `BEEHIIV_API_KEY` | Beehiiv → Settings → API |
+| `BEEHIIV_PUB_ID`  | Beehiiv → Settings → API (formato `pub_...`) |
+
+**No Beehiiv, configurar:**
+
+1. **Welcome Email** — sem ele, o `send_welcome_email` não dispara nada.
+2. **Email verification / double opt-in** — ligado = manda e-mail de confirmação
+   antes de contar o inscrito; desligado = entra direto. Escolha sua.
+
+Depois de mudar env vars, **refaça o deploy** pra elas valerem.
 
 ## Deploy no Vercel (recomendado)
 

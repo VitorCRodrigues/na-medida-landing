@@ -4,6 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Na Medida</title>
+
+  <!-- Facebook Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1596638151138571');
+  fbq('track', 'PageView');
+  </script>
+  <noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1596638151138571&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel Code -->
   <meta name="description" content="O primeiro app brasileiro de redução de álcool feito para a vida social do país. Val, sua parceira de IA, planeja o happy hour, o churrasco e o carnaval sem exagero.">
   <meta property="og:title" content="Na Medida — Beba menos. Curta muito mais.">
   <meta property="og:description" content="Coach de IA que planeja o happy hour de sexta e o churrasco de domingo sem exagero. Sem julgamento, sem cobrança em dólar.">
@@ -1158,6 +1177,8 @@
 
     try {
       await subscribe(email, hpInput.value);
+
+      if (typeof fbq === 'function') fbq('track', 'Lead');
 
       if (isHero) {
         document.getElementById('hero-form').innerHTML = `

@@ -15,7 +15,10 @@ export default async function handler(req, res) {
   const email = (body.email || '').trim().toLowerCase();
 
   // Honeypot: bots preenchem campos escondidos. Humano nunca vê esse campo.
-  if (body.hp) return res.status(200).json({ ok: true });
+  if (body.hp) {
+    console.warn('[subscribe] honeypot disparado, ignorando cadastro (hp preenchido)');
+    return res.status(200).json({ ok: true });
+  }
 
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
     return res.status(400).json({ error: 'Confere o e-mail — parece que tem algo errado nele.' });

@@ -768,11 +768,7 @@
     .cta-error { color: #fff; }
 
     .hp {
-      position: absolute;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
+      display: none;
     }
 
     /* ─── MISC ───────────────────────────────────────────── */
@@ -1154,6 +1150,8 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, hp }),
     });
+    // TEMP DEBUG — remover depois de confirmar o fix do honeypot no mobile.
+    console.log('[subscribe] status:', res.status, 'ok:', res.ok, 'hp enviado:', JSON.stringify(hp));
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
       throw new Error(data.error || 'Não deu pra cadastrar agora. Tenta de novo daqui a pouco.');

@@ -837,7 +837,6 @@
         </p>
         <form class="hero-form" id="hero-form" onsubmit="handleSubmit(event, 'hero')">
           <input class="hero-input" type="email" placeholder="seu@email.com" required id="hero-email" autocomplete="email">
-          <input class="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" id="hero-hp">
           <button type="submit" class="btn btn-primary btn-lg">Quero entrar na lista</button>
         </form>
         <p class="form-error" id="hero-error" role="alert" hidden></p>
@@ -1116,7 +1115,6 @@
     <form id="cta-form" onsubmit="handleSubmit(event, 'cta')">
       <div class="cta-form" id="cta-form-fields">
         <input class="cta-input" type="email" placeholder="seu@email.com" required id="cta-email" autocomplete="email">
-        <input class="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" id="cta-hp">
         <button type="submit" class="btn-white">Quero entrar 🤙</button>
       </div>
       <div class="success-msg" id="cta-success">
@@ -1152,9 +1150,30 @@
     });
   }
 
-  // Pré-aquece a função serverless assim que a página carrega, pra evitar
-  // que o cold start da Vercel derrube a primeira tentativa de envio.
+  function createHoneypot(containerId, inputId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'hp';
+    input.id = inputId;
+    input.tabIndex = -1;
+    input.autocomplete = 'off';
+    input.setAttribute('aria-hidden', 'true');
+    container.appendChild(input);
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
+    // Honeypot criado via JS, não presente no HTML estático: o navegador
+    // in-app do Facebook (aberto ao clicar num anúncio) varre e preenche
+    // todo input de texto do primeiro form da página assim que ela carrega
+    // — inclusive campos escondidos — o que disparava o honeypot em
+    // usuários reais e descartava o cadastro silenciosamente.
+    createHoneypot('hero-form', 'hero-hp');
+    createHoneypot('cta-form-fields', 'cta-hp');
+
+    // Pré-aquece a função serverless assim que a página carrega, pra evitar
+    // que o cold start da Vercel derrube a primeira tentativa de envio.
     fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1177,8 +1196,6 @@
       res = await subscribeAttempt(email, hp);
     }
 
-    // TEMP DEBUG — remover depois de confirmar o fix do honeypot no mobile.
-    console.log('[subscribe] status:', res.status, 'ok:', res.ok, 'hp enviado:', JSON.stringify(hp));
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
       throw new Error(data.error || 'Não deu pra cadastrar agora. Tenta de novo daqui a pouco.');
@@ -1189,7 +1206,7 @@
     e.preventDefault();
     const isHero = source === 'hero';
     const emailInput = document.getElementById(isHero ? 'hero-email' : 'cta-email');
-    const hpInput = document.getElementById(isHero ? 'hero-hp' : 'cta-hp');
+    const hpInput = document.getElementById(isHero ? 'hero-hp' : 'cta-hp'); // pode ser null se injetado ainda não rodou
     const errorEl = document.getElementById(isHero ? 'hero-error' : 'cta-error');
     const btn = e.target.querySelector('button');
     const email = emailInput.value.trim();
@@ -1201,7 +1218,7 @@
     btn.textContent = 'Enviando…';
 
     try {
-      await subscribe(email, hpInput.value);
+      await subscribe(email, hpInput ? hpInput.value : '');
 
       if (typeof fbq === 'function') fbq('track', 'Lead');
 

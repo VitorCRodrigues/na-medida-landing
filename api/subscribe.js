@@ -1,34 +1,42 @@
-// Serverless function (Vercel) — cadastra o e-mail no Beehiiv.
+export const config = { runtime: 'edge' };
+
+// Edge Function (Vercel) — cadastra o e-mail no Beehiiv.
 // Env vars necessárias: BEEHIIV_API_KEY, BEEHIIV_PUB_ID
 // A key nunca vai pro client — fica só aqui no servidor.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const GENERIC_ERROR = 'Não deu pra cadastrar agora. Tenta de novo daqui a pouco.';
 
-export default async function handler(req, res) {
+function json(data, status, extraHeaders) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...extraHeaders },
+  });
+}
+
+export default async function handler(req) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'Método não permitido.' });
+    return json({ error: 'Método não permitido.' }, 405, { Allow: 'POST' });
   }
 
-  const body = typeof req.body === 'string' ? safeParse(req.body) : req.body || {};
+  const body = await safeParse(req);
   const email = (body.email || '').trim().toLowerCase();
 
   // Honeypot: bots preenchem campos escondidos. Humano nunca vê esse campo.
   if (body.hp) {
     console.warn('[subscribe] honeypot disparado, ignorando cadastro (hp preenchido)');
-    return res.status(200).json({ ok: true });
+    return json({ ok: true }, 200);
   }
 
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
-    return res.status(400).json({ error: 'Confere o e-mail — parece que tem algo errado nele.' });
+    return json({ error: 'Confere o e-mail — parece que tem algo errado nele.' }, 400);
   }
 
   const apiKey = process.env.BEEHIIV_API_KEY;
   const pubId = process.env.BEEHIIV_PUB_ID;
   if (!apiKey || !pubId) {
     console.error('[subscribe] faltando BEEHIIV_API_KEY ou BEEHIIV_PUB_ID nas env vars');
-    return res.status(500).json({ error: GENERIC_ERROR });
+    return json({ error: GENERIC_ERROR }, 500);
   }
 
   try {
@@ -45,7 +53,7 @@ export default async function handler(req, res) {
         utm_source: 'landing',
         utm_medium: 'organic',
         utm_campaign: 'waitlist-fase-0',
-        referring_site: req.headers.referer || 'https://namedida.app',
+        referring_site: req.headers.get('referer') || 'https://namedida.app',
       }),
     });
 
@@ -53,19 +61,19 @@ export default async function handler(req, res) {
 
     if (!r.ok) {
       console.error('[subscribe] beehiiv respondeu', r.status, JSON.stringify(data));
-      return res.status(502).json({ error: GENERIC_ERROR });
+      return json({ error: GENERIC_ERROR }, 502);
     }
 
-    return res.status(200).json({ ok: true });
+    return json({ ok: true }, 200);
   } catch (err) {
     console.error('[subscribe] falha ao chamar beehiiv', err);
-    return res.status(502).json({ error: GENERIC_ERROR });
+    return json({ error: GENERIC_ERROR }, 502);
   }
 }
 
-function safeParse(s) {
+async function safeParse(req) {
   try {
-    return JSON.parse(s);
+    return await req.json();
   } catch {
     return {};
   }

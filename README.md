@@ -16,7 +16,7 @@ Site estático em HTML/CSS/JS puro. Sem dependências, sem build step, sem node_
 na-medida-landing/
 ├── index.html          # a landing inteira (HTML + CSS + JS)
 ├── api/
-│   └── subscribe.js    # função serverless: cadastra e-mail no Beehiiv
+│   └── subscribe.js    # edge function: cadastra e-mail no Beehiiv
 └── .env.example        # env vars necessárias (configurar no Vercel)
 ```
 

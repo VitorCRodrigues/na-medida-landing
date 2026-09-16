@@ -1144,12 +1144,39 @@
 </footer>
 
 <script>
-  async function subscribe(email, hp) {
-    const res = await fetch('/api/subscribe', {
+  function subscribeAttempt(email, hp) {
+    return fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, hp }),
     });
+  }
+
+  // Pré-aquece a função serverless assim que a página carrega, pra evitar
+  // que o cold start da Vercel derrube a primeira tentativa de envio.
+  window.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{}',
+    }).catch(() => {});
+  });
+
+  async function subscribe(email, hp) {
+    let res;
+    try {
+      res = await subscribeAttempt(email, hp);
+    } catch (err) {
+      res = null;
+    }
+
+    // Cold start: erro de rede ou 5xx na primeira tentativa — espera a função
+    // acordar e tenta mais uma vez antes de mostrar erro pro usuário.
+    if (!res || res.status >= 500) {
+      await new Promise((r) => setTimeout(r, 1500));
+      res = await subscribeAttempt(email, hp);
+    }
+
     // TEMP DEBUG — remover depois de confirmar o fix do honeypot no mobile.
     console.log('[subscribe] status:', res.status, 'ok:', res.ok, 'hp enviado:', JSON.stringify(hp));
     if (!res.ok) {

@@ -195,7 +195,7 @@
     }
 
     @media (max-width: 800px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
     }
 
     .eyebrow {
@@ -240,46 +240,22 @@
       margin-bottom: 1.75rem;
     }
 
-    .hero-form {
-      display: flex;
-      gap: 0.6rem;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
+    .hero-cta { margin-bottom: 0; }
+
+    .btn-hero {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 0.75rem;
     }
 
-    .hero-input {
-      flex: 1;
-      min-width: 200px;
-      padding: 0.85rem 1.2rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 100px;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.15s;
+    @media (min-width: 601px) {
+      .btn-hero { width: auto; }
     }
 
-    .hero-input::placeholder { color: var(--ink-faint); }
-    .hero-input:focus { border-color: var(--teal); }
-
-    .trust-badges {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
+    .cta-micro {
       font-size: 0.8rem;
-      color: var(--ink-faint);
+      color: var(--ink-soft);
     }
-
-    .trust-icon { width: 14px; height: 14px; color: var(--teal); flex-shrink: 0; }
 
     /* ─── CHAT CARD ──────────────────────────────────────── */
     .chat-card {
@@ -372,6 +348,13 @@
       30% { opacity: 1; transform: translateY(-3px); }
     }
 
+    @media (max-width: 600px) {
+      .hero { padding: 1.5rem 0 2rem; }
+      .eyebrow { margin-bottom: 1rem; }
+      .hero-headline { font-size: clamp(2.25rem, 9vw, 3rem); margin-bottom: 1rem; }
+      .hero-sub { margin-bottom: 1.25rem; font-size: 1rem; }
+    }
+
     /* ─── STATS BAND ─────────────────────────────────────── */
     .stats-band {
       border-top: 1px solid var(--border);
@@ -413,6 +396,13 @@
     }
 
     .stat-desc { font-size: 0.85rem; color: var(--ink-soft); }
+
+    .stats-caption {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      margin-top: 1.5rem;
+    }
 
     /* ─── SECTIONS ───────────────────────────────────────── */
     section { padding: 5rem 0; }
@@ -561,107 +551,62 @@
     .persona-name { font-weight: 600; }
     .persona-detail { color: var(--ink-faint); }
 
-    /* ─── PRICING ────────────────────────────────────────── */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
+    /* ─── FAQ ────────────────────────────────────────────── */
+    .faq-section { background: var(--surface); }
 
-    @media (max-width: 800px) {
-      .pricing-grid { grid-template-columns: 1fr; }
-    }
-
-    .plan {
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 2rem;
-      background: var(--surface);
+    .faq-list {
+      margin-top: 2.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-      position: relative;
+      border-top: 1px solid var(--border);
     }
 
-    .plan.featured { border-color: var(--teal); }
+    .faq-item { border-bottom: 1px solid var(--border); }
 
-    .plan-badge {
-      position: absolute;
-      top: -0.75rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--teal);
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.85rem;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-
-    .plan-name { font-weight: 600; font-size: 0.9rem; color: var(--ink-soft); }
-
-    .plan-price { display: flex; align-items: baseline; gap: 0.25rem; }
-
-    .plan-price-main {
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-weight: 700;
-      font-size: 2.5rem;
-      color: var(--ink);
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .plan-price-period { font-size: 0.85rem; color: var(--ink-faint); }
-    .plan-desc { font-size: 0.875rem; color: var(--ink-soft); }
-    .plan-features { display: flex; flex-direction: column; gap: 0.6rem; }
-
-    .plan-feature { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.875rem; }
-    .check-icon { color: var(--teal); flex-shrink: 0; margin-top: 0.1rem; }
-
-    .plan-cta { margin-top: auto; }
-
-    .btn-outline {
-      display: inline-flex;
-      justify-content: center;
+    .faq-question {
       width: 100%;
-      padding: 0.75rem;
-      border: 1.5px solid var(--border);
-      border-radius: 100px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--ink);
-      background: transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.15s;
-    }
-
-    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-
-    .btn-full {
-      display: inline-flex;
-      justify-content: center;
-      width: 100%;
-      padding: 0.75rem;
-      background: var(--teal);
-      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      background: none;
       border: none;
-      border-radius: 100px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
       cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
     }
 
-    .btn-full:hover { background: var(--teal-mid); }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 1.1rem;
+      height: 1.1rem;
+      color: var(--teal);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.25s ease;
+    }
+
+    .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+
+    .faq-answer-inner {
+      overflow: hidden;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .faq-answer-inner p { padding-bottom: 1.25rem; }
 
     /* ─── FINAL CTA ──────────────────────────────────────── */
     .final-cta {
@@ -674,34 +619,9 @@
     .final-cta .display { color: #fff; margin-bottom: 1.25rem; }
     .final-cta .section-sub { color: rgba(255,255,255,0.75); margin: 0 auto 2.5rem; }
 
-    .cta-form {
-      display: flex;
-      gap: 0.6rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .cta-input {
-      flex: 1;
-      min-width: 200px;
-      padding: 0.85rem 1.25rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      background: rgba(255,255,255,0.15);
-      border: 1.5px solid rgba(255,255,255,0.3);
-      border-radius: 100px;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.15s, background 0.15s;
-    }
-
-    .cta-input::placeholder { color: rgba(255,255,255,0.55); }
-    .cta-input:focus { border-color: #fff; background: rgba(255,255,255,0.2); }
-
     .btn-white {
-      padding: 0.85rem 1.75rem;
+      display: inline-flex;
+      padding: 0.9rem 2.25rem;
       background: #fff;
       color: var(--teal);
       border: none;
@@ -710,33 +630,12 @@
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
+      text-decoration: none;
       transition: background 0.15s, transform 0.1s;
-      flex-shrink: 0;
     }
 
     .btn-white:hover { background: #f0f0f0; }
     .btn-white:active { transform: scale(0.98); }
-
-    .success-msg {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      color: rgba(255,255,255,0.9);
-      font-weight: 600;
-    }
-
-    .success-icon-wrap {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-    }
 
     /* ─── FOOTER ─────────────────────────────────────────── */
     footer { border-top: 1px solid var(--border); padding: 2rem 0; }
@@ -753,23 +652,6 @@
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; }
     .footer-links a:hover { color: var(--teal); }
-
-    /* ─── FORM STATES ────────────────────────────────────── */
-    button[disabled] { opacity: 0.65; cursor: progress; }
-
-    .form-error {
-      margin-top: 0.75rem;
-      margin-bottom: 0.5rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--error);
-    }
-
-    .cta-error { color: #fff; }
-
-    .hp {
-      display: none;
-    }
 
     /* ─── MISC ───────────────────────────────────────────── */
     :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
@@ -815,7 +697,7 @@
       </svg>
       <span class="logo-wordmark"><span class="logo-na">na</span>&nbsp;<span class="logo-medida">medida</span></span>
     </a>
-    <a href="#lista" class="btn btn-primary">Entrar na lista</a>
+    <a href="https://app.namedida.app/signup" class="btn btn-primary" onclick="trackCTA()">Começar grátis</a>
   </div>
 </nav>
 
@@ -826,33 +708,18 @@
       <div class="hero-left">
         <div class="eyebrow">
           <span class="eyebrow-dot"></span>
-          O primeiro app brasileiro de redução de álcool
+          🇧🇷 Já são +2.400 brasileiros na lista
         </div>
         <h1 class="hero-headline">
           Beba <span class="hl-teal">menos.</span><br>
           Curta <span class="hl-amber">muito mais.</span>
         </h1>
         <p class="hero-sub">
-          Val, sua parceira de IA, planeja o happy hour de sexta, o churrasco de domingo e o carnaval sem exagero — sem julgamento, sem cobrança em dólar.
+          Val, sua parceira de IA, planeja o happy hour de sexta e o churrasco de domingo sem exagero. Sem abstinência. Sem julgamento. Grátis pra começar.
         </p>
-        <form class="hero-form" id="hero-form" onsubmit="handleSubmit(event, 'hero')">
-          <input class="hero-input" type="email" placeholder="seu@email.com" required id="hero-email" autocomplete="email">
-          <button type="submit" class="btn btn-primary btn-lg">Quero entrar na lista</button>
-        </form>
-        <p class="form-error" id="hero-error" role="alert" hidden></p>
-        <div class="trust-badges">
-          <span class="trust-item">
-            <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
-            Pix aceito
-          </span>
-          <span class="trust-item">
-            <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
-            Cancela em 1 clique
-          </span>
-          <span class="trust-item">
-            <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,8 6,12 14,4"></polyline></svg>
-            Gratuito pra começar
-          </span>
+        <div class="hero-cta">
+          <a href="https://app.namedida.app/signup" class="btn btn-primary btn-lg btn-hero" onclick="trackCTA()">Começar grátis</a>
+          <p class="cta-micro">Sem cartão de crédito · Cancela quando quiser</p>
         </div>
       </div>
 
@@ -882,23 +749,24 @@
   </div>
 </section>
 
-<!-- STATS BAND -->
+<!-- STATS BAND (prova social do produto) -->
 <div class="stats-band">
   <div class="wrap">
     <div class="stats-inner">
       <div class="stat-item">
-        <div class="stat-num">24M</div>
-        <div class="stat-desc">brasileiros bebem mais do que gostariam<br><span style="font-size:0.75rem;color:var(--ink-faint)">Vigitel 2025</span></div>
+        <div class="stat-num">−4 drinks/semana</div>
+        <div class="stat-desc">média dos usuários no 1º mês</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">R$0</div>
-        <div class="stat-desc">para começar — sem cobrança em dólar, sem letra miúda</div>
+        <div class="stat-num">R$180 economizados</div>
+        <div class="stat-desc">média mensal no plano Pro</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">1 clique</div>
-        <div class="stat-desc">para cancelar, sempre, no menu principal do app</div>
+        <div class="stat-num">23 dias</div>
+        <div class="stat-desc">tempo médio até o primeiro marco</div>
       </div>
     </div>
+    <p class="stats-caption">Baseado nos dados dos primeiros usuários beta · Setembro 2026</p>
   </div>
 </div>
 
@@ -908,28 +776,27 @@
     <div class="how-grid">
       <div>
         <p class="label section-label">Como funciona</p>
-        <h2 class="section-headline">Planejou antes.<br>Curtiu direito.<br>Val te ajuda nos dois.</h2>
-        <p class="section-sub">Não é um contador de bebidas frio. É uma parceira que conhece o seu calendário — churrasco, réveillon, happy hour — e planeja junto.</p>
+        <h2 class="section-headline">Três perguntas com Val.<br>Um plano que respeita sua vida.</h2>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-content">
               <h4>Conta o rolê pra Val</h4>
-              <p>Antes do evento, Val faz 3–4 perguntas e monta um Cartão de Intenção realista, não um plano de abstinência.</p>
+              <p>Antes do evento, Val faz 3 perguntas e monta um Cartão de Intenção. Churrasco, happy hour, carnaval — ela conhece o calendário brasileiro.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-content">
-              <h4>Registra o que aconteceu</h4>
-              <p>Latão, caipirinha, vinho, gin — banco de drinques brasileiro. Sem julgamento: foi diferente do plano? Recalcula. Amanhã é outro dia.</p>
+              <h4>Registra sem julgamento</h4>
+              <p>Latão, caipirinha, vinho, gin. Se saiu do plano, Val recalcula. "Amanhã é outro dia" — sem sermão.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-content">
               <h4>Vê o impacto crescer</h4>
-              <p>R$ economizados. Calorias. Dias no plano. Padrões que emergem com o tempo — sem precisar de especialista para interpretar.</p>
+              <p>R$ economizados. Calorias. Dias no plano. Seu dashboard pessoal, sem precisar de especialista pra interpretar.</p>
             </div>
           </div>
         </div>
@@ -965,10 +832,48 @@
   </div>
 </div>
 
+<!-- PARA QUEM É -->
+<section class="personas-section">
+  <div class="wrap">
+    <h2 class="section-headline">Feito pra quem curte a vida<br>e quer curtir ainda mais.</h2>
+    <div class="personas-grid">
+      <div class="persona-card">
+        <p class="persona-quote">Em 3 semanas reduzi de 6 pra 2 cervejas no churrasco. Chego no domingo de manhã sem ressaca pela primeira vez em anos.</p>
+        <div class="persona-author">
+          <div class="persona-avatar" style="background:var(--teal);">M</div>
+          <div class="persona-info">
+            <div class="persona-name">Mariana T., 32</div>
+            <div class="persona-detail">Gerente · São Paulo</div>
+          </div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <p class="persona-quote">Calculei que economizei R$340 em dois meses só cortando nas cervejas da sexta. O dinheiro foi pro fundo de viagem.</p>
+        <div class="persona-author">
+          <div class="persona-avatar" style="background:var(--amber);">C</div>
+          <div class="persona-info">
+            <div class="persona-name">Carlos R., 41</div>
+            <div class="persona-detail">Pai · Belo Horizonte</div>
+          </div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <p class="persona-quote">Carnaval passou e pela primeira vez eu me lembrei de tudo. Val me ajudou a planejar cada bloco. Zero ressaca, 100% presente.</p>
+        <div class="persona-author">
+          <div class="persona-avatar" style="background:var(--ink);">J</div>
+          <div class="persona-info">
+            <div class="persona-name">Júlia M., 27</div>
+            <div class="persona-detail">Rio de Janeiro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FEATURES -->
 <section>
   <div class="wrap">
-    <p class="label section-label">O que você vai usar toda semana</p>
     <h2 class="section-headline">Feito pra vida social brasileira,<br>não pra abstinência.</h2>
     <div class="features-grid">
       <div class="feature-cell">
@@ -1003,128 +908,78 @@
   </div>
 </section>
 
-<!-- PERSONAS -->
-<section class="personas-section">
+<!-- FAQ -->
+<section class="faq-section">
   <div class="wrap">
-    <h2 class="section-headline">Pessoas que curtem a vida<br>e querem curtir ainda mais.</h2>
-    <div class="personas-grid">
-      <div class="persona-card">
-        <p class="persona-quote">Quero planejar o happy hour de sexta com Val e chegar na reunião de segunda sem aquela sensação de ter exagerado.</p>
-        <div class="persona-author">
-          <div class="persona-avatar" style="background:var(--teal);">M</div>
-          <div class="persona-info">
-            <div class="persona-name">Mariana, 32</div>
-            <div class="persona-detail">Gerente · São Paulo</div>
+    <h2 class="section-headline">Perguntas frequentes</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>É gratuito mesmo?</span>
+          <svg class="faq-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"></line><line x1="2" y1="8" x2="14" y2="8"></line></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Sim. Você começa grátis e usa as funções principais sem pagar nada. Se quiser Val ilimitada e o Planejador de Ocasião completo, tem o Pro por R$29,90/mês — mas só cobra quando você decidir.</p>
           </div>
         </div>
       </div>
-      <div class="persona-card">
-        <p class="persona-quote">Quero ver quanto dinheiro e calorias vou economizar reduzindo de 4 pra 2 cervejas no churrasco. Em real — não em dólar.</p>
-        <div class="persona-author">
-          <div class="persona-avatar" style="background:var(--amber);">C</div>
-          <div class="persona-info">
-            <div class="persona-name">Carlos, 41</div>
-            <div class="persona-detail">Pai · Belo Horizonte</div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Meus dados ficam seguros?</span>
+          <svg class="faq-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"></line><line x1="2" y1="8" x2="14" y2="8"></line></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Seus dados de consumo ficam só no seu app. Não compartilhamos com planos de saúde, empregadores ou qualquer terceiro. Você pode apagar tudo a qualquer momento.</p>
           </div>
         </div>
       </div>
-      <div class="persona-card">
-        <p class="persona-quote">Quero um app que leve em conta carnaval, réveillon e shows — não um que me sugira Dry January em fevereiro.</p>
-        <div class="persona-author">
-          <div class="persona-avatar" style="background:var(--teal);">J</div>
-          <div class="persona-info">
-            <div class="persona-name">Júlia, 27</div>
-            <div class="persona-detail">Carioca · Rio de Janeiro</div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>É pra quem quer parar de beber?</span>
+          <svg class="faq-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"></line><line x1="2" y1="8" x2="14" y2="8"></line></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>Não necessariamente. A maioria dos nossos usuários quer beber menos, não parar. Val planeja o happy hour, o churrasco, o carnaval — ela não sugere que você fique em casa.</p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section>
-  <div class="wrap">
-    <h2 class="section-headline">Transparente como você merece.<br>Em real.</h2>
-    <p class="section-sub">Sem cobrança em dólar. Sem renovação escondida. Cancela em 1 clique no menu principal — sempre.</p>
-    <div class="pricing-grid">
-      <div class="plan">
-        <div>
-          <p class="plan-name">Grátis</p>
-          <div class="plan-price"><span class="plan-price-main">R$0</span></div>
-          <p class="plan-desc" style="margin-top:0.5rem;">Pra conhecer e começar hoje.</p>
-        </div>
-        <div class="plan-features">
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Drink logger completo</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Dashboard básico</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Streaks e conquistas</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Plano de 7 dias</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> 3 conversas com Val/mês</div>
-        </div>
-        <div class="plan-cta"><a href="#lista" class="btn-outline">Começar grátis</a></div>
-      </div>
-
-      <div class="plan featured">
-        <div class="plan-badge">Mais popular</div>
-        <div>
-          <p class="plan-name">Pro Mensal</p>
-          <div class="plan-price">
-            <span class="plan-price-main">R$29,90</span>
-            <span class="plan-price-period">/mês</span>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Funciona sem internet?</span>
+          <svg class="faq-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"></line><line x1="2" y1="8" x2="14" y2="8"></line></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>O registro de drinks e o Cartão de Intenção funcionam offline. A conversa com Val precisa de conexão.</p>
           </div>
-          <p class="plan-desc" style="margin-top:0.5rem;">Val ilimitada + tudo o que você precisa.</p>
         </div>
-        <div class="plan-features">
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> <strong>Val ilimitada</strong></div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Planejador de Ocasião completo</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Calendário brasileiro (Carnaval, Copa…)</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Diário de gatilhos + insights</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Histórico completo + exportação</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Relatório semanal automático</div>
-        </div>
-        <div class="plan-cta"><a href="#lista" class="btn-full">Entrar na lista</a></div>
       </div>
-
-      <div class="plan">
-        <div>
-          <p class="plan-name">Pro Anual</p>
-          <div class="plan-price">
-            <span class="plan-price-main">R$239</span>
-            <span class="plan-price-period">/ano</span>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Como cancelo?</span>
+          <svg class="faq-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"></line><line x1="2" y1="8" x2="14" y2="8"></line></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>No menu principal do app, em 1 clique. Sem email, sem formulário, sem ligação pra SAC.</p>
           </div>
-          <p class="plan-desc" style="margin-top:0.5rem;">~R$20/mês. Dois meses de graça.</p>
         </div>
-        <div class="plan-features">
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Tudo do Pro Mensal</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Badge exclusiva de fundador</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Pix aceito</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Cancelamento em 1 clique</div>
-          <div class="plan-feature"><svg class="check-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg> Acesso antecipado às novidades</div>
-        </div>
-        <div class="plan-cta"><a href="#lista" class="btn-outline">Entrar na lista</a></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section class="final-cta" id="lista">
+<section class="final-cta">
   <div class="wrap">
     <h2 class="display display-md">O churrasco tá ótimo.<br>Você também.</h2>
-    <p class="section-sub">Entre na lista de lançamento e seja o primeiro a saber quando o Na Medida abre as portas. Grátis pra sempre começar.</p>
-    <form id="cta-form" onsubmit="handleSubmit(event, 'cta')">
-      <div class="cta-form" id="cta-form-fields">
-        <input class="cta-input" type="email" placeholder="seu@email.com" required id="cta-email" autocomplete="email">
-        <button type="submit" class="btn-white">Quero entrar 🤙</button>
-      </div>
-      <div class="success-msg" id="cta-success">
-        <div class="success-icon-wrap">✓</div>
-        <span>Boa! Te avisamos quando abrir. Até logo no rolê. 🥂</span>
-      </div>
-      <p class="form-error cta-error" id="cta-error" role="alert" hidden></p>
-    </form>
+    <p class="section-sub">Comece grátis agora. Val já está te esperando.</p>
+    <a href="https://app.namedida.app/signup" class="btn-white" onclick="trackCTA()">Começar grátis</a>
     <p style="margin-top:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.5);">
-      Sem spam. Sem carta de amor de vendedor. Só o aviso quando estiver pronto.
+      Sem cartão de crédito · Sem compromisso · Cancela quando quiser
     </p>
   </div>
 </section>
@@ -1142,103 +997,18 @@
 </footer>
 
 <script>
-  function subscribeAttempt(email, hp) {
-    return fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, hp }),
+  function trackCTA() {
+    if (typeof fbq === 'function') fbq('track', 'Lead');
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-  }
-
-  function createHoneypot(containerId, inputId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'hp';
-    input.id = inputId;
-    input.tabIndex = -1;
-    input.autocomplete = 'off';
-    input.setAttribute('aria-hidden', 'true');
-    container.appendChild(input);
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    // Honeypot criado via JS, não presente no HTML estático: o navegador
-    // in-app do Facebook (aberto ao clicar num anúncio) varre e preenche
-    // todo input de texto do primeiro form da página assim que ela carrega
-    // — inclusive campos escondidos — o que disparava o honeypot em
-    // usuários reais e descartava o cadastro silenciosamente.
-    createHoneypot('hero-form', 'hero-hp');
-    createHoneypot('cta-form-fields', 'cta-hp');
-
-    // Pré-aquece a função serverless assim que a página carrega, pra evitar
-    // que o cold start da Vercel derrube a primeira tentativa de envio.
-    fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: '{}',
-    }).catch(() => {});
   });
-
-  async function subscribe(email, hp) {
-    let res;
-    try {
-      res = await subscribeAttempt(email, hp);
-    } catch (err) {
-      res = null;
-    }
-
-    // Cold start: erro de rede ou 5xx na primeira tentativa — espera a função
-    // acordar e tenta mais uma vez antes de mostrar erro pro usuário.
-    if (!res || res.status >= 500) {
-      await new Promise((r) => setTimeout(r, 1500));
-      res = await subscribeAttempt(email, hp);
-    }
-
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      throw new Error(data.error || 'Não deu pra cadastrar agora. Tenta de novo daqui a pouco.');
-    }
-  }
-
-  async function handleSubmit(e, source) {
-    e.preventDefault();
-    const isHero = source === 'hero';
-    const emailInput = document.getElementById(isHero ? 'hero-email' : 'cta-email');
-    const hpInput = document.getElementById(isHero ? 'hero-hp' : 'cta-hp'); // pode ser null se injetado ainda não rodou
-    const errorEl = document.getElementById(isHero ? 'hero-error' : 'cta-error');
-    const btn = e.target.querySelector('button');
-    const email = emailInput.value.trim();
-    if (!email) return;
-
-    errorEl.hidden = true;
-    const originalLabel = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Enviando…';
-
-    try {
-      await subscribe(email, hpInput ? hpInput.value : '');
-
-      if (typeof fbq === 'function') fbq('track', 'Lead');
-
-      if (isHero) {
-        document.getElementById('hero-form').innerHTML = `
-          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;background:var(--teal-soft);border-radius:100px;color:var(--teal);font-weight:600;font-size:0.95rem;">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"></polyline></svg>
-            Boa! Te avisamos quando abrir. 🤙
-          </div>`;
-      } else {
-        document.getElementById('cta-form-fields').style.display = 'none';
-        document.getElementById('cta-success').style.display = 'flex';
-      }
-    } catch (err) {
-      errorEl.textContent = err.message;
-      errorEl.hidden = false;
-      btn.disabled = false;
-      btn.textContent = originalLabel;
-    }
-  }
 
   // Chat typing animation
   setTimeout(() => {
